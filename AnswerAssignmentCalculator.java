@@ -29,29 +29,26 @@ public class AnswerAssignmentCalculator {
 
     static double calculate(List<String> mathProblem){
         String getOperator = "";
-        double getNextNum = 0;
+        double total =0;
 
-        double total = Double.parseDouble(mathProblem.get(0)); //get angka pertama
         //perhitungan
         for (int indexCharInMathProblem = 0; indexCharInMathProblem < mathProblem.size(); indexCharInMathProblem++) {
             getOperator = mathProblem.get(indexCharInMathProblem);
 
             if(getOperator.equals("+")){
                 indexCharInMathProblem++;
-                getNextNum = Double.parseDouble(mathProblem.get(indexCharInMathProblem));
-                total = addition(getNextNum, total);
+                total = addition(Double.parseDouble(mathProblem.get(indexCharInMathProblem)), total);
             }else if(getOperator.equals("-")){
                 indexCharInMathProblem++;
-                getNextNum = Double.parseDouble(mathProblem.get(indexCharInMathProblem));
-                total = subtraction(getNextNum, total);
+                total = subtraction(Double.parseDouble(mathProblem.get(indexCharInMathProblem)), total);
             }else if(getOperator.equals("/")){
                 indexCharInMathProblem++;
-                getNextNum = Double.parseDouble(mathProblem.get(indexCharInMathProblem));
-                total = division(getNextNum, total);
+                total = division(Double.parseDouble(mathProblem.get(indexCharInMathProblem)), total);
             }else if(getOperator.equals("*")){
                 indexCharInMathProblem++;
-                getNextNum = Double.parseDouble(mathProblem.get(indexCharInMathProblem));
-                total = multiplication(getNextNum, total);
+                total = multiplication(Double.parseDouble(mathProblem.get(indexCharInMathProblem)), total);
+            }else{
+                total = Double.parseDouble(mathProblem.get(indexCharInMathProblem));
             }
         }
         return total;
@@ -62,7 +59,6 @@ public class AnswerAssignmentCalculator {
         if(isOperator(readNextChar)) {
             mathProblem.add(tempChar);
             mathProblem.add(String.valueOf(readNextChar));
-
             tempChar = "";
         } else {
             tempChar = tempChar + String.valueOf(readNextChar);
