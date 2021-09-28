@@ -3,6 +3,7 @@ import java.util.*;
 class CalculatorRefactor {	 
     static List<String> listInputUser= new ArrayList<String>();
     static String valueInputUser = "";
+    static double result = 0;
 
     public static void main(String args[]) {
         Scanner inputConsole = new Scanner(System.in);
@@ -11,36 +12,9 @@ class CalculatorRefactor {
         try {
             String inputUser = inputConsole.next();
             
-            for (int indexInputUser = 0; indexInputUser < inputUser.length(); indexInputUser++) {
-                addCharInputUserIntoArrayList(indexInputUser,inputUser);
-
-                lastInputUser(indexInputUser,inputUser);
-            }
+            parseInputUserIntoArrayList(inputUser);
             
-            //perhitungan
-            double result = 0;
-            for (int indexListInputUser = 0; indexListInputUser < listInputUser.size(); indexListInputUser++) {
-                switch (listInputUser.get(indexListInputUser)) {
-                    case "+":
-                        indexListInputUser++;
-						result = additionOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
-                        break;
-                    case "-":
-                        indexListInputUser++;
-						result = substractionOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
-                        break;
-                    case "/":
-                        indexListInputUser++;
-                        result = divisionOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
-                        break;
-					case "*":
-                        indexListInputUser++;
-                        result = multiplicationOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
-                        break;
-                    default:
-                        result = Double.parseDouble(listInputUser.get(indexListInputUser));
-                }
-            }
+            mathematicsOperation();
 
             System.out.println("** Result: "+result);
 
@@ -48,6 +22,14 @@ class CalculatorRefactor {
             System.out.println("Invalid input");
         }
     }
+
+    public static void parseInputUserIntoArrayList(String inputUser){ 
+        for (int indexInputUser = 0; indexInputUser < inputUser.length(); indexInputUser++) {
+            addCharInputUserIntoArrayList(indexInputUser,inputUser);
+				
+            lastInputUser(indexInputUser,inputUser);
+        }
+    } 
 
     public static void addCharInputUserIntoArrayList(int indexInputUser, String inputUser){ 
         if(inputUser.charAt(indexInputUser) == '+' || inputUser.charAt(indexInputUser) == '-' || inputUser.charAt(indexInputUser) == '/' || inputUser.charAt(indexInputUser) == '*') {
@@ -64,6 +46,31 @@ class CalculatorRefactor {
 		if (indexInputUser == inputUser.length() - 1) {
             listInputUser.add(valueInputUser);
             valueInputUser = "";
+        }
+	}
+
+    public static void mathematicsOperation(){
+		for (int indexListInputUser = 0; indexListInputUser < listInputUser.size(); indexListInputUser++) {
+            switch (listInputUser.get(indexListInputUser)) {
+                case "+":
+                    indexListInputUser++;
+					result = additionOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
+                    break;
+                case "-":
+                    indexListInputUser++;
+					result = substractionOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
+                    break;
+                case "/":
+                    indexListInputUser++;
+                    result = divisionOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
+                    break;
+				case "*":
+                    indexListInputUser++;
+					result = multiplicationOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
+					break;
+                default:
+                    result = Double.parseDouble(listInputUser.get(indexListInputUser));
+            }
         }
 	}
 	
