@@ -10,3 +10,5 @@ class CalculatorRefactor {
 git add namaFileYangInginDiubah/tambah
 git commit -m "message perubahan yang terjadi"
 git push origin(namaRemote) namaBranch => ex: git push origin main
+
+git commit 
