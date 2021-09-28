@@ -4,7 +4,7 @@ class Calculator {
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
         System.out.print("Input number and operators that you want to calculate: ");
-
+//kosong
         try {
             String nextLine = in.next();
             List<String> nuOps= new ArrayList<String>();
