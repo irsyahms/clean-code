@@ -82,13 +82,9 @@ public class AnswerAssignmentCalculator {
         }
     }
 
-    static void printResult(double total ){
-        if(mathProblem.size() < 3){
-            System.out.println("** Result: " + mathProblem.get(0));
-        }else{
-            total = calculate(mathProblem);
-            System.out.println("** Result: " + total);
-        }
+    static void printResult(double total){
+        total = calculate(mathProblem);
+        System.out.println("** Result: " + total);
     }
 
 
@@ -107,13 +103,8 @@ public class AnswerAssignmentCalculator {
                 lastChar(indexParsingChar, inputFromCommand);
             }
 
-            //perhitungan
-            if(mathProblem.size() < 3){
-                System.out.println("** Result: " + mathProblem.get(0));
-            }else{
-                total = calculate(mathProblem);
-                System.out.println("** Result: " + total);
-            }
+            //perhitungan dan print result
+            printResult(total);
 
 
         } catch (InputMismatchException e) {
