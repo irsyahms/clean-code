@@ -35,46 +35,57 @@ class Calculator {
         List<String> listSplitOperatorAngka = new ArrayList<String>();
         String temp = "";
 
-        for (int i = 0; i < inputanScanner.length(); i++) {
-            if(inputanScanner.charAt(i) == '+' || inputanScanner.charAt(i) == '-' || inputanScanner.charAt(i) == '/' || inputanScanner.charAt(i) == '*') {
+        for (int index = 0; index < inputanScanner.length(); index++) {
+            if(inputanScanner.charAt(index) == '+' || inputanScanner.charAt(index) == '-' || inputanScanner.charAt(index) == '/' || inputanScanner.charAt(index) == '*') {
                 listSplitOperatorAngka.add(temp);
-                listSplitOperatorAngka.add(String.valueOf(inputanScanner.charAt(i)));
+                listSplitOperatorAngka.add(String.valueOf(inputanScanner.charAt(index)));
                 temp = "";
             } else {
-                temp = temp + String.valueOf(inputanScanner.charAt(i));
+                temp = temp + String.valueOf(inputanScanner.charAt(index));
             }
-            if (i == inputanScanner.length() - 1) {
+            if (index == inputanScanner.length() - 1) {
                 listSplitOperatorAngka.add(temp);
                 temp = "";
             }
         }
-        System.out.println(listSplitOperatorAngka);
+
+        printAngkaYangDiJumlahkan(listSplitOperatorAngka);
+
         return listSplitOperatorAngka;
     }
 
+    public void printAngkaYangDiJumlahkan(List<String> listAngkaOperator){
+        String tampung = "";
+        for(int index = 0;index<listAngkaOperator.size();index++){
+            tampung = tampung +" "+ listAngkaOperator.get(index);
+        }
+        printMessage("Angka Yang Di Jumlahkan \n"+tampung);
+
+    }
+
     public void hasilPerhitungan(List<String> listAngkaOperator){
-        int i = 0;
+        int index = 0;
         double hasilPerhitungan = 0;
-        for(i=0;i<listAngkaOperator.size();i++){
-            switch (listAngkaOperator.get(i)){
+        for(index=0;index<listAngkaOperator.size();index++){
+            switch (listAngkaOperator.get(index)){
                 case "+":
-                    i++;
-                    hasilPerhitungan = calculator.tambahAngka(hasilPerhitungan,Double.parseDouble(listAngkaOperator.get(i)));
+                    index++;
+                    hasilPerhitungan = calculator.tambahAngka(hasilPerhitungan,Double.parseDouble(listAngkaOperator.get(index)));
                     break;
                 case "-":
-                    i++;
-                    hasilPerhitungan = calculator.kurangAngka(hasilPerhitungan,Double.parseDouble(listAngkaOperator.get(i)));
+                    index++;
+                    hasilPerhitungan = calculator.kurangAngka(hasilPerhitungan,Double.parseDouble(listAngkaOperator.get(index)));
                     break;
                 case "/":
-                    i++;
-                    hasilPerhitungan = calculator.bagiAngka(hasilPerhitungan,Double.parseDouble(listAngkaOperator.get(i)));
+                    index++;
+                    hasilPerhitungan = calculator.bagiAngka(hasilPerhitungan,Double.parseDouble(listAngkaOperator.get(index)));
                     break;
                 case "*":
-                    i++;
-                    hasilPerhitungan = calculator.kaliAngka(hasilPerhitungan,Double.parseDouble(listAngkaOperator.get(i)));
+                    index++;
+                    hasilPerhitungan = calculator.kaliAngka(hasilPerhitungan,Double.parseDouble(listAngkaOperator.get(index)));
                     break;
                 default:
-                    hasilPerhitungan = Double.parseDouble(listAngkaOperator.get(i));
+                    hasilPerhitungan = Double.parseDouble(listAngkaOperator.get(index));
             }
         }
         printMessage("**Result : "+hasilPerhitungan);
