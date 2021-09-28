@@ -1,30 +1,20 @@
 import java.util.*;
 
 class CalculatorRefactor {	 
+    static List<String> listInputUser= new ArrayList<String>();
+    static String valueInputUser = "";
+
     public static void main(String args[]) {
         Scanner inputConsole = new Scanner(System.in);
         System.out.print("Input number and operators that you want to calculate: ");
 
         try {
             String inputUser = inputConsole.next();
-            List<String> listInputUser= new ArrayList<String>();
-
-            //parsing input menjadi ArrayList berdasarkan angka dan operator
-            String valueInputUser = "";
+            
             for (int indexInputUser = 0; indexInputUser < inputUser.length(); indexInputUser++) {
-                if(inputUser.charAt(indexInputUser) == '+' || inputUser.charAt(indexInputUser) == '-' || inputUser.charAt(indexInputUser) == '/' || inputUser.charAt(indexInputUser) == '*') {
-                    listInputUser.add(valueInputUser);  
-                    listInputUser.add(String.valueOf(inputUser.charAt(indexInputUser)));
+                addCharInputUserIntoArrayList(indexInputUser,inputUser);
 
-                    valueInputUser = "";
-                } else {
-                    valueInputUser = valueInputUser + String.valueOf(inputUser.charAt(indexInputUser));
-                }
-
-                if (indexInputUser == inputUser.length() - 1) {
-                    listInputUser.add(valueInputUser);
-                    valueInputUser = "";
-                }
+                lastInputUser(indexInputUser,inputUser);
             }
             
             //perhitungan
@@ -58,6 +48,24 @@ class CalculatorRefactor {
             System.out.println("Invalid input");
         }
     }
+
+    public static void addCharInputUserIntoArrayList(int indexInputUser, String inputUser){ 
+        if(inputUser.charAt(indexInputUser) == '+' || inputUser.charAt(indexInputUser) == '-' || inputUser.charAt(indexInputUser) == '/' || inputUser.charAt(indexInputUser) == '*') {
+            listInputUser.add(valueInputUser);  
+            listInputUser.add(String.valueOf(inputUser.charAt(indexInputUser)));
+
+            valueInputUser = "";
+        } else {
+            valueInputUser = valueInputUser + String.valueOf(inputUser.charAt(indexInputUser));
+        }
+    }
+
+    public static void lastInputUser(int indexInputUser,String inputUser){
+		if (indexInputUser == inputUser.length() - 1) {
+            listInputUser.add(valueInputUser);
+            valueInputUser = "";
+        }
+	}
 	
 	public static double additionOperation (double valueInputUser1, double valueInputUser2){
 		return valueInputUser1 + valueInputUser2;
