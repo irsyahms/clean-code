@@ -33,19 +33,19 @@ class Calculator {
 
     public List<String> splitOperatorAngka(String inputanScanner){
         List<String> listSplitOperatorAngka = new ArrayList<String>();
-        String temp = "";
+        String tempList = "";
 
         for (int index = 0; index < inputanScanner.length(); index++) {
             if(inputanScanner.charAt(index) == '+' || inputanScanner.charAt(index) == '-' || inputanScanner.charAt(index) == '/' || inputanScanner.charAt(index) == '*') {
-                listSplitOperatorAngka.add(temp);
+                listSplitOperatorAngka.add(tempList);
                 listSplitOperatorAngka.add(String.valueOf(inputanScanner.charAt(index)));
-                temp = "";
+                tempList = "";
             } else {
-                temp = temp + String.valueOf(inputanScanner.charAt(index));
+                tempList = tempList + String.valueOf(inputanScanner.charAt(index));
             }
             if (index == inputanScanner.length() - 1) {
-                listSplitOperatorAngka.add(temp);
-                temp = "";
+                listSplitOperatorAngka.add(tempList);
+                tempList = "";
             }
         }
 
@@ -55,11 +55,11 @@ class Calculator {
     }
 
     public void printAngkaYangDiJumlahkan(List<String> listAngkaOperator){
-        String tampung = "";
+        String tempPrintAngkaYangDiJumlahkan = "";
         for(int index = 0;index<listAngkaOperator.size();index++){
-            tampung = tampung +" "+ listAngkaOperator.get(index);
+            tempPrintAngkaYangDiJumlahkan = tempPrintAngkaYangDiJumlahkan +" "+ listAngkaOperator.get(index);
         }
-        printMessage("Angka Yang Di Jumlahkan \n"+tampung);
+        printMessage("Angka Yang Di Jumlahkan \n"+tempPrintAngkaYangDiJumlahkan);
 
     }
 
