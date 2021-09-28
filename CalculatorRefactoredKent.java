@@ -1,17 +1,17 @@
 import java.util.*;
 
 class CalculatorRefactoredKent {
-    static List<String> numberOperators= new ArrayList<String>();
-    static String temp = "";
-    static Scanner in = new Scanner(System.in);
-    static double calculationResult = 0;
+    static List<String> numberOperators= new ArrayList<String>(); //List to store the numbers and operators
+    static String tempCharacter = ""; // as a temporary string to store each number/operator
+    static Scanner inputCalculation = new Scanner(System.in); //as a input to calculate
+    static double calculationResult = 0; //initial state of result
 
     public static void main(String args[]) {
         System.out.print("Input number and operators that you want to calculate: ");
 
         try {
-            String nextLine = in.next();
-            numberOperators = parseInputIntoArrayList(nextLine);
+            String nextLine = inputCalculation.next();
+            numberOperators = parseInputIntoList(nextLine);
             calculateArray();
             System.out.println("** Result: " + calculationResult);          
 
@@ -20,66 +20,67 @@ class CalculatorRefactoredKent {
         }
     }
 
-    static List<String> parseInputIntoArrayList(String input){ //method untuk parse setiap char dalam input kedalam ArrayList
-        for (int i = 0; i < input.length(); i++) {
-            addEachCharIntoArrayList(i,input);
-            isLastInput(i,input);
+    static List<String> parseInputIntoList(String input){ //a method to parse every char in the input into the List
+        for (int inputIndex = 0; inputIndex < input.length(); inputIndex++) {
+            addEachCharIntoList(inputIndex,input);
+            isLastInput(inputIndex,input);
         }
-        return numberOperators; //hasil parsing dikembalikan menjadi isi numberOperators
+        return numberOperators; //return parsing result into the list values
     } 
 
-    static void addEachCharIntoArrayList(int i, String input){ //method untuk menambahkan setiap char kedalam ArrayList
-        if(input.charAt(i) == '+' || input.charAt(i) == '-' || input.charAt(i) == '/') {
-            numberOperators.add(temp);  
-            numberOperators.add(String.valueOf(input.charAt(i)));
+    static void addEachCharIntoList(int inputIndex, String input){ //a method to insert every char into the list
+        if(input.charAt(inputIndex) == '+' || input.charAt(inputIndex) == '-' || input.charAt(inputIndex) == '/') {
+            numberOperators.add(tempCharacter);  // storing the number into the List
+            numberOperators.add(String.valueOf(input.charAt(inputIndex)));// adding the operator into the list
 
-            temp = "";
+            tempCharacter = "";
         } else {
-            temp += String.valueOf(input.charAt(i));
+            tempCharacter += String.valueOf(input.charAt(inputIndex)); // to keep more than 1 digits number into 1 index
         }
     }
 
-    static void isLastInput(int i, String input){ // method untuk menghentikan penambahan setelah char terakhir dalam input
-        if (i == input.length() - 1) {
-            numberOperators.add(temp);
-            temp = "";
+    static void isLastInput(int inputIndex, String input){ // a method to store last number in inputCalculation
+        if (inputIndex == input.length() - 1) {
+            numberOperators.add(tempCharacter);
+            tempCharacter = ""; //clear tempCharacter
         }
     }
-    static void calculateArray(){ // method untuk kalkulasi data input yang sudah dimasukkan ke arraylist
-        for (int i = 0; i < numberOperators.size(); i++) {
-            switch (numberOperators.get(i)) {
+    static void calculateArray(){ // a method to calculate inputCalculation
+        for (int calcIndex = 0; calcIndex < numberOperators.size(); calcIndex++) {
+            switch (numberOperators.get(calcIndex)) {
                 case "+":
-                    i++;
-                    calcSum(i);
+                    calcIndex++;
+                    calculationResult = calcSum(calculationResult, Double.parseDouble(numberOperators.get(calcIndex)));
                     break;
                 case "-":
-                    i++;
-                    calcSub(i);
+                    calcIndex++;
+                    calculationResult = calcSub(calculationResult, Double.parseDouble(numberOperators.get(calcIndex)));
                     break;
                 case "/":
-                    i++;
-                    calcDivide(i);
+                    calcIndex++;
+                    calculationResult = calcDivide(calculationResult, Double.parseDouble(numberOperators.get(calcIndex)));
                     break;
                 default:
-                    calcNumber(i);
+                    calculationResult = calcNumber(Double.parseDouble(numberOperators.get(calcIndex)));
+                    
             }
         }
     }
 
-    static void calcSum(int i){ //method untuk menghitung penambahan
-        calculationResult += Double.parseDouble(numberOperators.get(i));
+    static double calcSum(double firstNum, double secNum){ //a method to do addition
+        return firstNum + secNum;
     }
 
-    static void calcSub(int i){ //method untuk menghitung pengurangan
-        calculationResult -= Double.parseDouble(numberOperators.get(i));
+    static double calcSub(double firstNum, double secNum){ //a method to do subtraction
+        return firstNum - secNum;
     }
 
-    static void calcDivide(int i){ //method untuk menghitung pembagian
-        calculationResult /= Double.parseDouble(numberOperators.get(i));
+    static double calcDivide(double firstNum, double secNum){ //a method to do division
+        return firstNum / secNum;
     }
 
-    static void calcNumber(int i){ //method untuk angka pertama dalam input
-        calculationResult = Double.parseDouble(numberOperators.get(i));
+    static double calcNumber(double firstNum){ //method to store first number in the list
+        return firstNum;
 
     }
 
