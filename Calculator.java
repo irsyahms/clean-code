@@ -88,7 +88,7 @@ class Calculator {
         return number1 * number2;
     }
 
-    public static double calcNumber(double Number1){
-        return Number1;
+    public static double calcNumber(double number1){
+        return number1;
     }
 }
