@@ -2,56 +2,76 @@ import java.util.*;
 
 class CalculatorRefactor {	 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        Scanner inputConsole = new Scanner(System.in);
         System.out.print("Input number and operators that you want to calculate: ");
 
         try {
-            String nextLine = in.next();
-            List<String> nuOps= new ArrayList<String>();
+            String inputUser = inputConsole.next();
+            List<String> listInputUser= new ArrayList<String>();
 
             //parsing input menjadi ArrayList berdasarkan angka dan operator
-            String temp = "";
-            for (int i = 0; i < nextLine.length(); i++) {
-                if(nextLine.charAt(i) == '+' || nextLine.charAt(i) == '-' || nextLine.charAt(i) == '/') {
-                    nuOps.add(temp);  
-                    nuOps.add(String.valueOf(nextLine.charAt(i)));
+            String valueInputUser = "";
+            for (int indexInputUser = 0; indexInputUser < inputUser.length(); indexInputUser++) {
+                if(inputUser.charAt(indexInputUser) == '+' || inputUser.charAt(indexInputUser) == '-' || inputUser.charAt(indexInputUser) == '/' || inputUser.charAt(indexInputUser) == '*') {
+                    listInputUser.add(valueInputUser);  
+                    listInputUser.add(String.valueOf(inputUser.charAt(indexInputUser)));
 
-                    temp = "";
+                    valueInputUser = "";
                 } else {
-                    temp = temp + String.valueOf(nextLine.charAt(i));
+                    valueInputUser = valueInputUser + String.valueOf(inputUser.charAt(indexInputUser));
                 }
 
-                if (i == nextLine.length() - 1) {
-                    nuOps.add(temp);
-                    temp = "";
+                if (indexInputUser == inputUser.length() - 1) {
+                    listInputUser.add(valueInputUser);
+                    valueInputUser = "";
                 }
             }
             
             //perhitungan
-            double t = 0;
-            for (int i = 0; i < nuOps.size(); i++) {
-                switch (nuOps.get(i)) {
+            double result = 0;
+            for (int indexListInputUser = 0; indexListInputUser < listInputUser.size(); indexListInputUser++) {
+                switch (listInputUser.get(indexListInputUser)) {
                     case "+":
-                        i++;
-                        t = t + Double.parseDouble(nuOps.get(i));
+                        indexListInputUser++;
+						result = additionOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
                         break;
                     case "-":
-                        i++;
-                        t = t - Double.parseDouble(nuOps.get(i));
+                        indexListInputUser++;
+						result = substractionOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
                         break;
                     case "/":
-                        i++;
-                        t = t / Double.parseDouble(nuOps.get(i));
+                        indexListInputUser++;
+                        result = divisionOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
+                        break;
+					case "*":
+                        indexListInputUser++;
+                        result = multiplicationOperation(result,Double.parseDouble(listInputUser.get(indexListInputUser)));
                         break;
                     default:
-                        t = Double.parseDouble(nuOps.get(i));
+                        result = Double.parseDouble(listInputUser.get(indexListInputUser));
                 }
             }
 
-            System.out.println("** Result: " + t);
+            System.out.println("** Result: "+result);
 
         } catch (InputMismatchException e) {
             System.out.println("Invalid input");
         }
     }
+	
+	public static double additionOperation (double valueInputUser1, double valueInputUser2){
+		return valueInputUser1 + valueInputUser2;
+	}
+	
+	public static double substractionOperation (double valueInputUser1, double valueInputUser2){
+		return valueInputUser1 - valueInputUser2;
+	}
+	
+	public static double divisionOperation (double valueInputUser1, double valueInputUser2){
+		return valueInputUser1 / valueInputUser2;
+	}
+	
+	public static double multiplicationOperation(double valueInputUser1, double valueInputUser2){
+		return valueInputUser1 * valueInputUser2;
+	}
 }
