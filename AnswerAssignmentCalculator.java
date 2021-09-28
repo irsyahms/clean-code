@@ -3,6 +3,7 @@ import java.util.*;
 
 public class AnswerAssignmentCalculator {
     static List<String> mathProblem= new ArrayList<String>();
+    static String tempChar = "";
 
     static boolean isOperator(char readNextChar){
         if(readNextChar == '+' || readNextChar == '-' || readNextChar == '/' || readNextChar == '*'){
@@ -32,53 +33,78 @@ public class AnswerAssignmentCalculator {
 
         double total = Double.parseDouble(mathProblem.get(0)); //get angka pertama
         //perhitungan
-        for (int i = 0; i < mathProblem.size(); i++) {
-            getOperator = mathProblem.get(i);
+        for (int indexCharInMathProblem = 0; indexCharInMathProblem < mathProblem.size(); indexCharInMathProblem++) {
+            getOperator = mathProblem.get(indexCharInMathProblem);
 
             if(getOperator.equals("+")){
-                getNextNum = Double.parseDouble(mathProblem.get(i+1));
+                indexCharInMathProblem++;
+                getNextNum = Double.parseDouble(mathProblem.get(indexCharInMathProblem));
                 total = addition(getNextNum, total);
             }else if(getOperator.equals("-")){
-                getNextNum = Double.parseDouble(mathProblem.get(i+1));
+                indexCharInMathProblem++;
+                getNextNum = Double.parseDouble(mathProblem.get(indexCharInMathProblem));
                 total = subtraction(getNextNum, total);
             }else if(getOperator.equals("/")){
-                getNextNum = Double.parseDouble(mathProblem.get(i+1));
+                indexCharInMathProblem++;
+                getNextNum = Double.parseDouble(mathProblem.get(indexCharInMathProblem));
                 total = division(getNextNum, total);
             }else if(getOperator.equals("*")){
-                getNextNum = Double.parseDouble(mathProblem.get(i+1));
+                indexCharInMathProblem++;
+                getNextNum = Double.parseDouble(mathProblem.get(indexCharInMathProblem));
                 total = multiplication(getNextNum, total);
             }
         }
         return total;
     }
 
+    static void addParsingChar(int indexParsingChar, String inputFromCommand){
+        char readNextChar = inputFromCommand.charAt(indexParsingChar);
+        if(isOperator(readNextChar)) {
+            mathProblem.add(tempChar);
+            mathProblem.add(String.valueOf(readNextChar));
+
+            tempChar = "";
+        } else {
+            tempChar = tempChar + String.valueOf(readNextChar);
+        }
+    }
+
+    static boolean isLastChar(int indexParsingChar, String inputFromCommand){
+        if(indexParsingChar == inputFromCommand.length() - 1){
+            return true;
+        }else return false;
+    }
+
+    static void lastChar(int indexParsingChar,  String nextLine){
+        if (isLastChar(indexParsingChar, nextLine)) {
+            mathProblem.add(tempChar);
+            tempChar = "";
+        }
+    }
+
+    static void printResult(double total ){
+        if(mathProblem.size() < 3){
+            System.out.println("** Result: " + mathProblem.get(0));
+        }else{
+            total = calculate(mathProblem);
+            System.out.println("** Result: " + total);
+        }
+    }
+
 
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        Scanner inputScanner = new Scanner(System.in);
         System.out.print("Input number and operators that you want to calculate: ");
 
         try {
-            String nextLine = in.next();
+            String inputFromCommand = inputScanner.next();
             double total = 0;
 
             //parsing input menjadi ArrayList berdasarkan angka dan operator
-            String temp = "";
-            for (int i = 0; i < nextLine.length(); i++) {
-                char readNextChar = nextLine.charAt(i);
-                if(isOperator(readNextChar)) {
-                    mathProblem.add(temp);
-                    mathProblem.add(String.valueOf(readNextChar));
-
-                    temp = "";
-                } else {
-                    temp = temp + String.valueOf(readNextChar);
-                }
-
-                if (i == nextLine.length() - 1) {
-                    mathProblem.add(temp);
-                    temp = "";
-                }
+            for (int indexParsingChar = 0; indexParsingChar < inputFromCommand.length(); indexParsingChar++) {
+                addParsingChar(indexParsingChar, inputFromCommand);
+                lastChar(indexParsingChar, inputFromCommand);
             }
 
             //perhitungan
